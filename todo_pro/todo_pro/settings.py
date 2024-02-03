@@ -85,16 +85,6 @@ WSGI_APPLICATION = "todo_pro.wsgi.application"
 
 #new mysql database 🔴🔴🔴
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'your_database_name',
-#         'USER': 'your_mysql_username',
-#         'PASSWORD': 'your_mysql_password',
-#         'HOST': 'localhost',   # or the IP address of your MySQL server
-#         'PORT': '3306',        # default MySQL port
-#     }
-# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
