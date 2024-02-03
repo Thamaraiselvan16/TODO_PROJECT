@@ -1,46 +1,188 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO APP</title>
 
-<div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-md-8">  <!-- Adjusted column width -->
-        <div class="todo-container">
-          <div class="todo-search">
-            <form action="" method="POST">
-              {% csrf_token %}
-              <!-- <h1 class="todo-app-title">TODO APP</h1> -->
-              {{ form.title }}
-              <button class="btn btn-primary">Add</button>
-            </form>
-          </div>
-        
-        <div class="todo-list">
-          {% for task in tasks %}
-            <div class="todo-list-item">
-              <div class="task">
-                <input type="checkbox" id="myCheckbox{{ task.id }}" name="myCheckbox{{ task.id }}">
-                <label for="myCheckbox{{ task.id }}" style="color: #ff9900; font-size: 20px;">{{ task.title }}</label>
-              </div>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
 
-              <div class="btn-container">
-                <div class="edit">
-                  <a href="{% url 'task_update' task.id %}">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </a>
-                </div>
-                <div class="del">
-                  <a href="{% url 'task_delete' task.id %}">
-                    <i class="fa-solid fa-trash-can"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-           {% endfor %}
-        </div>
+    .container-fluid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .todo-container {
+      width: 400px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 50%;
+    }
+
+    .todo-header {
+      background-color: #343a40;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .todo-list {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .todo-list-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 10px;
+    }
+
+    .task {
+      display: flex;
+      align-items: center;
+    }
+
+    .task input[type="checkbox"] {
+      margin-right: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .task input[type="checkbox"]:hover {
+      transform: scale(1.2);
+    }
+
+    .task label {
+      color: #495057;
+      font-size: 18px;
+      word-break: break-all;
+      cursor: pointer;
+    }
+
+    .btn-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .edit,
+    .del {
+      margin-right: 10px;
+      cursor: pointer;
+      color: #6c757d;
+      padding: 8px 15px;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .edit:hover,
+    .del:hover {
+      color: #fff;
+      background-color: #007bff;
+    }
+
+    .todo-search {
+      padding: 20px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .todo-search form {
+      display: flex;
+      align-items: center;
+    }
+
+    .todo-search input[type="text"] {
+      flex-grow: 1;
+      padding: 8px;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+    }
+
+    .todo-search button {
+      margin-left: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .todo-search button:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container-fluid">
+    <div class="todo-container">
+      <div class="todo-header">
+        TODO APP
       </div>
+      <div class="todo-search">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <!--<input type="text" name="title" placeholder="Add a new task" required>-->
+          {{ form.title }}
+          <button type="submit">Add</button>
+        </form>
+      </div>
+      <div class="todo-list">
+        {% for task in tasks %}
+        <div class="todo-list-item">
+          <div class="task">
+            <input type="checkbox" id="myCheckbox{{ task.id }}" name="myCheckbox{{ task.id }}">
+            <label for="myCheckbox{{ task.id }}">{{ task.title }}</label>
+          </div>
+
+          <div class="btn-container">
+            <div class="edit">
+              <a href="{% url 'task_update' task.id %}">
+                <i class="fa-solid fa-pen-to-square">✏️ Edit</i>
+              </a>
+            </div>
+            <div class="del">
+              <a href="{% url 'task_delete' task.id %}">
+                <i class="fa-solid fa-trash-can">🗑️ Delete</i>
+              </a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      
     </div>
   </div>
-</div>
 
-{% endblock content %}
+</body>
+
+</html>
